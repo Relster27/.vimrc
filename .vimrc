@@ -94,7 +94,7 @@ set laststatus=2
 function! GetStatusLine()
   let l:mod = &modified ? ' [Modified]' : ' [Unmodified]'
   let l:ft = empty(&filetype) ? 'NoFiletype' : &filetype
-  return expand('%:p') . l:mod . ' - ' . l:ft . ' - Ln[' . line('.') . '], Co[' . col('.') . '], Total line: ' . line('$')
+  return expand('%:p') . l:mod . ' - ' . l:ft . ' - Total lines: ' . line('$') . ' - Ln[' . line('.') . '], Co[' . col('.') . ']'
 endfunction
 set statusline=%!GetStatusLine()
 "set statusline=%F\%m\ --\ %{&filetype ==# '' ? 'NULL' : &filetype}\ --\ Ln\[%l],\ Co\[%c],\ Total\ line:\ %L
