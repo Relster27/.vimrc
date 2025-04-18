@@ -4,8 +4,8 @@ set number relativenumber
 " Wrap strings so when full it goes to the next line (visually)
 set wrap
 
-" Status bar
-set laststatus=2
+" Textwidth before wrap
+set textwidth=80
 
 " Freely click anywhere on file using mouse
 set mouse=a
@@ -24,9 +24,20 @@ inoremap <A-Down> <Esc>:m .+1<CR>==gi
 vnoremap <A-Up>   :m '<-2<CR>gv=gv
 vnoremap <A-Down> :m '>+1<CR>gv=gv
 
+" Normal mode: indent/unindent current line
+nnoremap <Tab> >>
+nnoremap <S-Tab> <<
+" Visual & Visual Line modes: indent/unindent selection and keep it selected
+vnoremap <Tab> >gv
+vnoremap <S-Tab> <gv
+
 " Ctrl+backspace and Ctrl+Del (same as in vscode)
 "inoremap <C-BS> <C-W>  " <--- This doesn't work idk why
 inoremap <C-Del> <C-O>dw
+
+" NERDTree shortcut
+"nnoremap <C-\> :NERDTreeToggle<CR>
+nnoremap <C-\> :NERDTreeToggle<CR>:vertical resize 20<CR>
 
 " Man page
 runtime! ftplugin/man.vim " <--- Command must be 'Man' not 'man'
@@ -56,6 +67,9 @@ Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 
 " Dynamic/smart search Highlighting (same as Ctrl+F)
 Plug 'romainl/vim-cool'
+
+" NERDTree (workspace??)
+Plug 'preservim/nerdtree'
 call plug#end()
 
 " Use Tab for autocompletion
@@ -64,6 +78,23 @@ inoremap <silent><expr> <Tab> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<T
 " Use Enter to confirm selection
 inoremap <silent><expr> <CR> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>"
 
+" Map a Key for Hover (function/macro/type documentation)
+nmap <silent> K :call CocActionAsync('doHover')<CR>
+
 set termguicolors
 syntax on
 colorscheme vimvscode
+
+" Filetype
+filetype on
+autocmd BufRead,BufNewFile *.asm set filetype=asm
+
+" Status Bar
+set laststatus=2
+function! GetStatusLine()
+  let l:mod = &modified ? ' [Modified]' : ' [Unmodified]'
+  let l:ft = empty(&filetype) ? 'NoFiletype' : &filetype
+  return expand('%:p') . l:mod . ' - ' . l:ft . ' - Ln[' . line('.') . '], Co[' . col('.') . '], Total line: ' . line('$')
+endfunction
+set statusline=%!GetStatusLine()
+"set statusline=%F\%m\ --\ %{&filetype ==# '' ? 'NULL' : &filetype}\ --\ Ln\[%l],\ Co\[%c],\ Total\ line:\ %L
