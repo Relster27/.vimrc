@@ -70,6 +70,9 @@ Plug 'romainl/vim-cool'
 
 " NERDTree (workspace??)
 Plug 'preservim/nerdtree'
+
+" Auto pairs
+Plug 'jiangmiao/auto-pairs'
 call plug#end()
 
 " Use Tab for autocompletion
