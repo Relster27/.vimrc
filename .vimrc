@@ -13,6 +13,12 @@ set mouse=a
 " Highlight words when searching
 set hlsearch
 
+" Tab spacing
+set tabstop=8
+set shiftwidth=8
+set expandtab
+autocmd FileType * setlocal tabstop=8 shiftwidth=8 expandtab
+
 " CUSTOM START "
 " Normal mode: Move current line up or down
 nnoremap <A-Up>   :m .-2<CR>==
@@ -62,7 +68,7 @@ Plug 'sheerun/vim-polyglot'
 " Autocomplete??
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
-" Ctrl+D-like feature (same as in vscode)
+" Ctrl+Del-like feature (same as in vscode)
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 
 " Dynamic/smart search Highlighting (same as Ctrl+F)
